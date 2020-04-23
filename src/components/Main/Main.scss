@@ -1,3 +1,63 @@
 .Main {
-  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.Main__propals {
+  background-color: $white;
+  color: $blackgrey;
+  width: 80%;
+  border-radius: 4px;
+}
+
+@keyframes move {
+  from {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  to {
+    top: 30%;
+    transform: translateY(-30%);
+  }
+}
+
+.Main__logo {
+  font-family: Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  font-size: 3rem;
+  text-shadow: 4px 5px 2px rgba(168, 168, 168, 0.61);
+  position: absolute;
+  animation: move 2s ease-in-out forwards;
+}
+
+.Main__proposals {
+  color: $blackgrey;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+.Main__content {
+  opacity: 0;
+  visibility: hidden;
+  animation: show 2s 2s ease-in-out forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.Main__user {
+  font-size: 1.1rem;
 }
