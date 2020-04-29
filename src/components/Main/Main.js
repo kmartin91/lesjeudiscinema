@@ -151,6 +151,8 @@ const Main = () => {
     toast.success(`Proposition changée pour ${title}`, {
       position: toast.POSITION.TOP_CENTER,
     });
+    setMovieUpdateId('');
+    setMovieUpdateTitle('');
   };
   const showUser = (title) => () => {};
 
