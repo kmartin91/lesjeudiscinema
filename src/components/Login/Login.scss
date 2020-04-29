@@ -1,7 +1,13 @@
+/** @define Login */
+
 .Login {
   display: flex;
   flex-direction: column;
-  flex-basis: 40%;
+  width: 100%;
+
+  @include lg {
+    width: 50%;
+  }
 }
 
 .Login__button {
