@@ -123,18 +123,24 @@ const Main = () => {
   };
 
   const toggleVote = async (title) => {
-    const { message } = addOrRemoveVote(title, getWeekNumber(), cookieUser, canVote);
+    const { message } = await addOrRemoveVote(title, getWeekNumber(), cookieUser, canVote);
 
     // Remove All dismiss
     toast.dismiss();
 
-    message
-      ? toast.error(`Aie une erreur a eu lieu: ${message}`, {
-          position: toast.POSITION.TOP_CENTER,
-        })
-      : toast.success(`Vote soumis pour ${title}`, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+    if (canVote) {
+      message
+        ? toast.error(`Aie une erreur a eu lieu: ${message}`, {
+            position: toast.POSITION.TOP_CENTER,
+          })
+        : toast.success(`Vote soumis pour ${title}`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+    } else {
+      toast.warn('Tu as déjà utilisé tous tes votes...', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   };
 
   const prepareUpdate = async (id, title) => {
