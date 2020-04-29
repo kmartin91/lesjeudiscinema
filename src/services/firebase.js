@@ -81,3 +81,6 @@ export const addOrRemoveVote = async (title, propalId, user, canVote) => {
       }
     });
 };
+
+export const getPropalById = (weekId, propalId) =>
+  db.collection('weeks').doc(weekId).collection('propositions').doc(propalId);

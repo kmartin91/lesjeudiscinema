@@ -1,5 +1,7 @@
 /** @define Main */
 
+@import '../../shared/css/medias.scss';
+
 .Main {
   position: relative;
   display: flex;
@@ -7,12 +9,13 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100%;
 }
 
 .Main__propals {
   background-color: $white;
   color: $blackgrey;
-  width: 80%;
+  width: 100%;
   border-radius: 4px;
   max-height: 500px;
   overflow-y: scroll;
@@ -23,6 +26,7 @@
     Ubuntu, Cantarell, Helvetica Neue, sans-serif;
   font-size: 3rem;
   text-shadow: 4px 5px 2px rgba(168, 168, 168, 0.61);
+  margin-bottom: 32px;
 }
 
 .Main__proposals {
@@ -52,7 +56,13 @@
   animation: show 2s 2s ease-in-out forwards;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  margin: 0 8px;
+  width: calc(100% - 16px);
+
+  @include lg {
+    width: 80%;
+    margin: 0;
+  }
 }
 
 .Main__userPropal {
@@ -70,7 +80,7 @@
 .Main__helper {
   background-color: rgba($white, 0.05);
   color: $white;
-  width: 80%;
+  width: 100%;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -107,10 +117,6 @@
   &:nth-child(odd) {
     background-color: $lightest-grey;
   }
-}
-
-.Main__movieTitle_alt {
-  cursor: default;
 }
 
 .Main__movieCount {

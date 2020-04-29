@@ -11,15 +11,16 @@ import './MovieSearcher.scss';
 
 type PropTypes = {
   handleSubmit: Function,
+  title?: string,
 };
 
 /**
  * MovieSearcher
  */
-const MovieSearcher = ({ handleSubmit }: PropTypes) => {
+const MovieSearcher = ({ handleSubmit, title }: PropTypes) => {
   const isSubscribed = useRef();
   const movieCallRef = useRef();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(title || '');
   const [imagePoster, setImagePoster] = useState('');
   const [moviesList, setMoviesList] = useState([]);
   const [isSelectedMovie, setIsSelectedMovie] = useState(false);

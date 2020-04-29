@@ -20,6 +20,7 @@ import {
   streamMoviesPropals,
   streamMoviesVotes,
   addOrRemoveVote,
+  getPropalById,
 } from '../../services/firebase';
 import { getWeekNumber, getMaxPropal, getMaxVote, getMovieImgUrl } from '../../shared/utils';
 import useDebounce from '../../hooks/useDebounce';
@@ -44,6 +45,8 @@ const Main = () => {
   const [propositions, setPropositions] = useState([]);
   const [votes, setVotes] = useState([]);
   const [error, setError] = useState(null);
+  const [movieUpdateId, setMovieUpdateId] = useState('');
+  const [movieUpdateTitle, setMovieUpdateTitle] = useState('');
   const weekNumber = getWeekNumber();
   // Using state to refresh when password is ok
   const [cookieAuth, setCookieAuth] = useState(cookies.auth);
@@ -56,7 +59,10 @@ const Main = () => {
     if (cookieAuth) {
       const unsubscribe = streamMoviesPropals(weekNumber, {
         next: (querySnapshot) => {
-          const propals = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+          const propals = querySnapshot.docs.map((docSnapshot) => ({
+            id: docSnapshot.id,
+            ...docSnapshot.data(),
+          }));
           setError(null);
           setPropositions(propals);
         },
@@ -73,7 +79,10 @@ const Main = () => {
     if (cookieAuth) {
       const unsubscribe = streamMoviesVotes(weekNumber, {
         next: (querySnapshot) => {
-          const votes = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+          const votes = querySnapshot.docs.map((docSnapshot) => ({
+            id: docSnapshot.id,
+            ...docSnapshot.data(),
+          }));
           setError(null);
           setVotes(votes);
         },
@@ -127,6 +136,22 @@ const Main = () => {
         });
   };
 
+  const prepareUpdate = async (id, title) => {
+    setMovieUpdateId(id);
+    setMovieUpdateTitle(title);
+  };
+
+  const handleUpdate = async (movie) => {
+    const { title, poster } = movie;
+    await getPropalById(weekNumber, movieUpdateId).update({
+      title,
+      poster,
+    });
+
+    toast.success(`Proposition changée pour ${title}`, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
   const showUser = (title) => () => {};
 
   const nbUpPropalRemains = groupedPropositions[cookieUser]
@@ -147,7 +172,7 @@ const Main = () => {
             <div className="Main__helper">
               <ol>
                 <li className="Main__helperLine">
-                  {`Toutes les semaines propose ${MAX_PROPAL} films que tu
+                  {`Toutes les semaines, propose ${MAX_PROPAL} films que tu
                   souhaiterais voir.`}
                 </li>
                 <li className="Main__helperLine">
@@ -158,7 +183,7 @@ const Main = () => {
                   Le film avec le plus de vote sera le film diffusé le jeudi à 21h30
                 </li>
                 <li className="Main__helperLine">
-                  Pour voir le film via sur Kast en cliquant{' '}
+                  Pour voir le film, connecte-toi sur Kast en cliquant{' '}
                   <a href="https://s.kast.live/g/2bwc506hlbf" target="_blank">
                     ICI
                   </a>
@@ -177,10 +202,13 @@ const Main = () => {
                 </p>
               </div>
             </div>
-            {nbUpPropalRemains > 0 && (
+            {(nbUpPropalRemains > 0 || movieUpdateId) && (
               <React.Fragment>
-                <h2>Tes propositions</h2>
-                <MovieSearcher handleSubmit={submitPropal} />
+                <h2>{!movieUpdateId ? 'Tes propositions' : 'Modifier la proposition'}</h2>
+                <MovieSearcher
+                  handleSubmit={!movieUpdateId ? submitPropal : handleUpdate}
+                  title={movieUpdateTitle}
+                />
               </React.Fragment>
             )}
             <h2>
@@ -198,7 +226,7 @@ const Main = () => {
                         {user === cookieUser ? 'Tes propositions' : user}
                       </span>
                       <div className="Main__movie">
-                        {item.map(({ title, poster }) => {
+                        {item.map(({ title, poster, id }) => {
                           const countVote = votes.filter(
                             ({ title: titleVotes }) => titleVotes === title,
                           ).length;
@@ -209,10 +237,12 @@ const Main = () => {
                           return (
                             <div
                               key={`${user}-${title}`}
-                              className={classnames('Main__movieTitle', {
-                                Main__movieTitle_alt: user === cookieUser,
-                              })}
-                              onClick={user !== cookieUser ? () => toggleVote(title) : () => {}}
+                              className="Main__movieTitle"
+                              onClick={
+                                user !== cookieUser
+                                  ? () => toggleVote(title)
+                                  : () => prepareUpdate(id, title)
+                              }
                               onMouseUp={() => showUser(title)}
                             >
                               {poster && (
@@ -223,11 +253,6 @@ const Main = () => {
                               )}
                               <span className="Main__movieItemTitle">{title}</span>{' '}
                               <span className="Main__movieCount">{countVote} vote(s)</span>
-                              {isInVotesUser ? (
-                                <SVGClose className="Main__icon Main__close" />
-                              ) : (
-                                <SVGCheck className="Main__icon Main__check" />
-                              )}
                             </div>
                           );
                         })}
