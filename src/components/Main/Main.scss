@@ -22,11 +22,13 @@
 }
 
 .Main__logo {
-  font-family: Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans,
-    Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  font-size: 3rem;
-  text-shadow: 4px 5px 2px rgba(168, 168, 168, 0.61);
   margin-bottom: 32px;
+  width: 160px;
+
+  /* stylelint-disable-next-line plugin/selector-bem-pattern */
+  #logo_svg__XMLID_111_ {
+    fill: $blackgrey;
+  }
 }
 
 .Main__proposals {

@@ -10,6 +10,7 @@ import Login from '../Login/Login';
 
 import SVGCheck from '../../shared/svg/checked.svg';
 import SVGClose from '../../shared/svg/close.svg';
+import Logo from '../../shared/svg/logo.svg';
 
 import MovieSearcher from '../MovieSearcher/MovieSearcher';
 import 'react-toastify/dist/ReactToastify.css';
@@ -165,7 +166,7 @@ const Main = () => {
   return (
     <div className="Main">
       <ToastContainer autoClose={3000} pauseOnFocusLoss={false} />
-      <div className="Main__logo">Les jeudis cinéma</div>
+      <Logo className="Main__logo" />
       <div className="Main__content">
         {!cookieAuth || !cookieUser ? (
           <Login handleCorrect={handleCorrect} />
