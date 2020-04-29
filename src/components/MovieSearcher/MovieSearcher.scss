@@ -1,0 +1,57 @@
+/** @define MovieSearcher */
+
+.MovieSearcher {
+  margin-bottom: 32px;
+  width: 80%;
+}
+
+.MovieSearcher__input {
+  display: flex;
+  flex-direction: column;
+}
+
+.MovieSearcher__suggestion {
+  background-color: $white;
+  border-radius: 4px;
+  color: $black;
+  padding: 0;
+  max-height: 300px;
+  overflow: scroll;
+}
+
+.MovieSearcher__suggestionItem {
+  background-color: $lighter-grey;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid $lightest-grey;
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom: none;
+  }
+
+  &:nth-child(odd) {
+    background-color: $lightest-grey;
+  }
+}
+
+.MovieSearcher__suggestionItemImg {
+  max-height: 60px;
+}
+
+.MovieSearcher__suggestionItemTitle {
+  font-size: 0.9rem;
+  padding-left: 8px;
+}
+
+.MovieSearcher__button {
+  margin-top: 16px;
+}

@@ -7,14 +7,59 @@
   "author": "Kevin MARTIN",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
+    "@svgr/parcel-plugin-svgr": "^5.4.0",
+    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "firebase": "^7.14.1",
+    "flow": "^0.2.3",
     "lodash": "^4.17.15",
     "parcel": "^1.12.4",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
+    "react-modal": "^3.11.2",
+    "react-toastify": "^5.5.0",
     "sass": "^1.26.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-flow": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "flow-bin": "^0.121.0",
+    "flow-typed": "^3.1.0",
+    "husky": "^4.2.3",
+    "jest-environment-jsdom-global": "^1.2.1",
+    "lint-staged": "^10.0.8",
+    "prettier": "^2.0.1",
+    "sass": "^1.26.3",
+    "stylelint": "^13.2.1",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-selector-bem-pattern": "^2.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn flow"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "src/**/*.scss": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "scripts": {
     "start": "parcel index.html",

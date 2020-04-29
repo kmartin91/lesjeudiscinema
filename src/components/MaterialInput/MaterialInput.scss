@@ -1,0 +1,13 @@
+/** @define MaterialInput */
+
+.MaterialInput {
+  display: flex;
+  align-items: flex-end;
+  margin: 8px;
+  width: 100%;
+}
+
+.MaterialInput__error {
+  position: absolute;
+  color: $red;
+}

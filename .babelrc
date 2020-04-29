@@ -1,0 +1,25 @@
+{
+    "plugins": [
+        ["@babel/plugin-transform-runtime",
+            {
+            "regenerator": true
+            }
+        ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+            [
+                "@babel/preset-env", {
+                "targets": {
+                "esmodules": false,
+                "node": "current"
+                }
+            }],
+            "@babel/preset-react",
+            "@babel/preset-flow"
+            ]
+        }
+    }
+}
+  
